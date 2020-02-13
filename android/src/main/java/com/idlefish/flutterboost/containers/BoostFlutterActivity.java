@@ -282,7 +282,7 @@ public class BoostFlutterActivity extends Activity
         super.onDestroy();
         delegate.onDestroyView();
         delegate.onDetach();
-//        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
+        //        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
     }
 
     @Override

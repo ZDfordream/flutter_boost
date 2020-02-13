@@ -513,7 +513,7 @@ public class FlutterFragment extends Fragment implements FlutterActivityAndFragm
      * Annotates methods in {@code NewFlutterFragment} that must be called by the containing
      * {@code Activity}.
      */
-    @interface ActivityCallThrough {
+    public @interface ActivityCallThrough {
     }
 
 }

@@ -4,19 +4,24 @@ package com.idlefish.flutterboost;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import com.idlefish.flutterboost.interfaces.*;
+import android.support.v4.content.LocalBroadcastManager;
+
+import com.idlefish.flutterboost.interfaces.IContainerManager;
+import com.idlefish.flutterboost.interfaces.IFlutterViewContainer;
+import com.idlefish.flutterboost.interfaces.INativeRouter;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import io.flutter.embedding.android.FlutterView;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.FlutterShellArgs;
 import io.flutter.embedding.engine.dart.DartExecutor;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.view.FlutterMain;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FlutterBoost {
 
@@ -137,9 +142,9 @@ public class FlutterBoost {
     }
 
     public void doInitialFlutter() {
-
-
-        if (mEngine != null) return;
+        long startInit = System.currentTimeMillis();
+        if (mEngine != null)
+            return;
 
         FlutterEngine flutterEngine = createEngine();
         if (mPlatform.lifecycleListener != null) {
@@ -159,11 +164,15 @@ public class FlutterBoost {
 
         flutterEngine.getDartExecutor().executeDartEntrypoint(entrypoint);
         mRegistry = new BoostPluginRegistry(createEngine());
-
+        long endInit = System.currentTimeMillis();
+        // 向外通知初始化时长
+        Intent intent = new Intent("action_flutter_engine_init");
+        intent.putExtra("flutter_engine_init", endInit - startInit);
+        LocalBroadcastManager.getInstance(mCurrentActiveActivity).sendBroadcast(intent);
     }
 
-    public void boostPluginRegistry(){
-        if(mRegistry!=null&& !mRegistry.hasPlugin("boostPluginRegistry")){
+    public void boostPluginRegistry() {
+        if (mRegistry != null && !mRegistry.hasPlugin("boostPluginRegistry")) {
             mPlatform.registerPlugins(mRegistry);
             mRegistry.registrarFor("boostPluginRegistry");
         }
@@ -203,7 +212,6 @@ public class FlutterBoost {
         private BoostPluginsRegister boostPluginsRegister;
 
 
-
         public ConfigBuilder(Application app, INativeRouter router) {
             this.router = router;
             this.mApp = app;
@@ -235,15 +243,16 @@ public class FlutterBoost {
         }
 
 
-
         public ConfigBuilder lifecycleListener(BoostLifecycleListener lifecycleListener) {
             this.lifecycleListener = lifecycleListener;
             return this;
         }
+
         public ConfigBuilder pluginsRegister(BoostPluginsRegister boostPluginsRegister) {
             this.boostPluginsRegister = boostPluginsRegister;
             return this;
         }
+
         public Platform build() {
 
             Platform platform = new Platform() {
@@ -278,7 +287,7 @@ public class FlutterBoost {
             };
 
             platform.lifecycleListener = this.lifecycleListener;
-            platform.pluginsRegister=this.boostPluginsRegister;
+            platform.pluginsRegister = this.boostPluginsRegister;
             return platform;
 
         }
