@@ -148,7 +148,7 @@ public class BoostFlutterActivity extends Activity
     }
 
 
-    private void switchLaunchThemeForNormalTheme() {
+    protected void switchLaunchThemeForNormalTheme() {
         try {
             ActivityInfo activityInfo = getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA);
             if (activityInfo.metaData != null) {
@@ -184,7 +184,7 @@ public class BoostFlutterActivity extends Activity
      */
     @Nullable
     @SuppressWarnings("deprecation")
-    private Drawable getSplashScreenFromManifest() {
+    protected Drawable getSplashScreenFromManifest() {
         try {
             ActivityInfo activityInfo = getPackageManager().getActivityInfo(
                     getComponentName(),
