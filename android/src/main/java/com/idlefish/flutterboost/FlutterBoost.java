@@ -136,6 +136,7 @@ public class FlutterBoost {
         if (mPlatform.whenEngineStart() == ConfigBuilder.IMMEDIATELY) {
 
             doInitialFlutter();
+            boostPluginRegistry();
         }
 
 
