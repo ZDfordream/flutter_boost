@@ -130,16 +130,11 @@ public class FlutterBoost {
                 }
             }
         };
-        platform.getApplication().registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
-
-
         if (mPlatform.whenEngineStart() == ConfigBuilder.IMMEDIATELY) {
-
             doInitialFlutter();
             boostPluginRegistry();
         }
-
-
+        platform.getApplication().registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
     }
 
     public void doInitialFlutter() {
