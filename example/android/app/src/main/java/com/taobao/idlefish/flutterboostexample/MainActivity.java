@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mOpenNative.setOnClickListener(this);
         mOpenFlutter.setOnClickListener(this);
         mOpenFlutterFragment.setOnClickListener(this);
+        LoadingIndicatorView loadingIndicatorView = findViewById(R.id.loadingIndicatorView);
+        loadingIndicatorView.show();
     }
 
     @Override

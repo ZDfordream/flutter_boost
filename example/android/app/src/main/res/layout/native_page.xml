@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="left"
     android:background="@android:color/white">
@@ -15,6 +16,17 @@
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="28sp"
         android:layout_gravity="center_horizontal"/>
+
+    <com.taobao.idlefish.flutterboostexample.LoadingIndicatorView
+        android:id="@+id/loadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:minWidth="44dp"
+        app:maxWidth="44dp"
+        app:minHeight="44dp"
+        app:maxHeight="44dp"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        app:indicatorColor="@color/design_default_color_primary" />
 
     <View android:layout_width="1dp"
         android:layout_height="0dp"
